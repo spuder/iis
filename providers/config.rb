@@ -25,15 +25,19 @@ include Chef::Mixin::ShellOut
 include Opscode::IIS::Helper
 
 action :config do
-  cmd = "#{appcmd(node)} set config #{new_resource.cfg_cmd}"
-  Chef::Log.debug(cmd)
-  shell_out!(cmd, :returns => new_resource.returns)
-  Chef::Log.info('IIS Config command run')
-  new_resource.updated_by_last_action(true)
+  config()
+end
+
+action :set do
+  config()
 end
 
 action :clear do
-  cmd = "#{appcmd(node)} clear config #{new_resource.cfg_cmd}"
+  config(:clear)
+end
+
+def config(action = :set)
+  cmd = "#{appcmd(node)} #{action} config #{new_resource.cfg_cmd}"
   Chef::Log.debug(cmd)
   shell_out!(cmd, :returns => new_resource.returns)
   Chef::Log.info('IIS Config command run')
