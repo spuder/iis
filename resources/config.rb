@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-actions :config
+actions :config, :clear
 default_action :config
 
 attribute :cfg_cmd, kind_of: String, name_attribute: true
